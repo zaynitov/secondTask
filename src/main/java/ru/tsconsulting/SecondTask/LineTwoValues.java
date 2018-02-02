@@ -11,6 +11,15 @@ public class LineTwoValues {
         this.valueSecond = valueSecond;
     }
 
+    public LineTwoValues(String valueFirst) {
+        this.valueFirst = valueFirst;
+    }
+
+    public LineTwoValues(String valueFirst, String valueSecond) {
+        this.valueFirst = valueFirst;
+        this.valueSecond = valueSecond;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -33,5 +42,10 @@ public class LineTwoValues {
 
     public String getValueSecond() {
         return valueSecond;
+    }
+
+    @Override
+    public String toString() {
+        return id+valueFirst+valueSecond;
     }
 }

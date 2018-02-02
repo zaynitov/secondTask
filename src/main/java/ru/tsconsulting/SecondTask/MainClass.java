@@ -1,5 +1,6 @@
 package ru.tsconsulting.SecondTask;
 
+import java.time.Period;
 import java.util.*;
 
 public class MainClass {
@@ -8,20 +9,27 @@ public class MainClass {
         List<LineOfTable> firstFile = readingFile.read(args[0]);
         List<LineOfTable> secFile = readingFile.read(args[1]);
 
-        System.out.println(firstFile.toString());
+/*        System.out.println(firstFile.toString());
         System.out.println(secFile.toString());
         System.out.println(resultArrayList(firstFile, secFile));
 
         System.out.println(resultLinkedList(firstFile, secFile));
-        System.out.println(resultHashMap(firstFile, secFile));
+        System.out.println(resultHashMap(firstFile, secFile));*/
+        PrintFiles printFiles=new PrintFiles();
+        printFiles.printInFile(resultArrayList(firstFile, secFile));
+
+
+        printFiles.printInFile(resultLinkedList(sortList(firstFile), sortList(secFile)));
+        printFiles.printInFile(resultHashMap(firstFile, secFile));
+
     }
 
-    public static List<LineOfTable> resultArrayList(List<LineOfTable> firstList, List<LineOfTable> secondList) {
-        List<LineOfTable> resultArrayList = new ArrayList<>();
+    public static List<LineTwoValues> resultArrayList(List<LineOfTable> firstList, List<LineOfTable> secondList) {
+        List<LineTwoValues> resultArrayList = new ArrayList<>();
         for (LineOfTable lineOfTableFirst : firstList) {
             for (LineOfTable lineOfTableSecond : secondList) {
                 if (lineOfTableFirst.getId() == lineOfTableSecond.getId()) {
-                    resultArrayList.add(new LineOfTable(lineOfTableFirst.getId(), lineOfTableFirst.getValue(),
+                    resultArrayList.add(new LineTwoValues(lineOfTableFirst.getId(), lineOfTableFirst.getValue(),
                             lineOfTableSecond.getValue()));
 
                 }
@@ -33,12 +41,9 @@ public class MainClass {
     }
 
 
-    public static List<LineOfTable> resultLinkedList(List<LineOfTable> firstList, List<LineOfTable> secondList) {
+    public static List<LineTwoValues> resultLinkedList(List<LineOfTable> firstList, List<LineOfTable> secondList) {
 
-        List<LineOfTable> resultLinkedList = new LinkedList<>();
-        sortList(firstList);
-        sortList(secondList);
-
+        List<LineTwoValues> resultLinkedList = new LinkedList<>();
         System.out.println(firstList);
         System.out.println(secondList);
 
@@ -106,36 +111,37 @@ public class MainClass {
 
         if(firstLine.getId()==secondLine.getId())
         {
-            resultLinkedList.add(new LineOfTable(firstLine.getId(), firstLine.getValue(),secondLine.getValue()));
+            resultLinkedList.add(new LineTwoValues(firstLine.getId(), firstLine.getValue(),secondLine.getValue()));
         }
 
         return resultLinkedList;
     }
 
-    public static void sortList(List<LineOfTable> listToSort) {
+    public static List<LineOfTable>  sortList(List<LineOfTable> listToSort) {
         Collections.sort(listToSort, new Comparator<LineOfTable>() {
             @Override
             public int compare(LineOfTable o1, LineOfTable o2) {
                 return (o1.getId() - o2.getId());
             }
         });
+        return listToSort;
 
     }
 
-    public static void putValuesRes(List<LineOfTable> resultLinkedList, String leftValue,
+    public static void putValuesRes(List<LineTwoValues> resultLinkedList, String leftValue,
                                     List<String> listOfValues, int id) {
 
         for (String rightValue : listOfValues) {
-            resultLinkedList.add(new LineOfTable(id, leftValue, rightValue));
+            resultLinkedList.add(new LineTwoValues(id, leftValue, rightValue));
         }
 
 
     }
 
-    public static Map<Integer, List<LineOfTable>> resultHashMap(List<LineOfTable> firstList, List<LineOfTable> secondList) {
+    public static Map<Integer, List<LineTwoValues>> resultHashMap(List<LineOfTable> firstList, List<LineOfTable> secondList) {
         Map<Integer, List<String>> mapFirst = new HashMap<>();
         Map<Integer, List<String>> mapSecond = new HashMap<>();
-        Map<Integer, List<LineOfTable>> resultMap = new HashMap<>();
+        Map<Integer, List<LineTwoValues>> resultMap = new HashMap<>();
 
         putArrayListInHashMap(firstList, mapFirst);
         putArrayListInHashMap(secondList, mapSecond);
@@ -163,7 +169,7 @@ public class MainClass {
     }
 
 
-    public static void putMixValuesToMap(Map<Integer, List<LineOfTable>> resultMap, List<String> leftList,
+    public static void putMixValuesToMap(Map<Integer, List<LineTwoValues>> resultMap, List<String> leftList,
                                          List<String> rightList, int id) {
 
         for (String leftValue : leftList) {
@@ -171,18 +177,16 @@ public class MainClass {
             for (String rightValue : rightList) {
 
                 if (!resultMap.containsKey(id)) {
-                    List<LineOfTable> valuesInMap = new ArrayList<>();
-                    valuesInMap.add(new LineOfTable(leftValue, rightValue));
+                    List<LineTwoValues> valuesInMap = new ArrayList<>();
+                    valuesInMap.add(new LineTwoValues(leftValue, rightValue));
                     resultMap.put(id, valuesInMap);
                 } else {
-                    resultMap.get(id).add(new LineOfTable(leftValue, rightValue));
+                    resultMap.get(id).add(new LineTwoValues(leftValue, rightValue));
                 }
 
             }
         }
     }
-
-
 
 
 }
