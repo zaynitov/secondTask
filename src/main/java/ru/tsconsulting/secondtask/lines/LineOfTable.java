@@ -1,4 +1,4 @@
-package ru.tsconsulting.SecondTask.lines;
+package ru.tsconsulting.secondtask.lines;
 
 public class LineOfTable {
     private Integer id;

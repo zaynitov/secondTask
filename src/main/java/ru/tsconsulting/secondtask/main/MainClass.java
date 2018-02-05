@@ -1,9 +1,9 @@
-package ru.tsconsulting.SecondTask.main;
+package ru.tsconsulting.secondtask.main;
 
-import ru.tsconsulting.SecondTask.lines.LineOfTable;
-import ru.tsconsulting.SecondTask.lines.LineTwoValues;
-import ru.tsconsulting.SecondTask.readandwrite.PrintInFile;
-import ru.tsconsulting.SecondTask.readandwrite.ReadingFiles;
+import ru.tsconsulting.secondtask.lines.LineOfTable;
+import ru.tsconsulting.secondtask.lines.LineTwoValues;
+import ru.tsconsulting.secondtask.readandwrite.PrintInFile;
+import ru.tsconsulting.secondtask.readandwrite.ReadingFiles;
 
 import java.util.*;
 

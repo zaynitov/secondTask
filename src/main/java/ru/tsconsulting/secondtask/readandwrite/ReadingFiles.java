@@ -1,6 +1,6 @@
-package ru.tsconsulting.SecondTask.readandwrite;
+package ru.tsconsulting.secondtask.readandwrite;
 
-import ru.tsconsulting.SecondTask.lines.LineOfTable;
+import ru.tsconsulting.secondtask.lines.LineOfTable;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

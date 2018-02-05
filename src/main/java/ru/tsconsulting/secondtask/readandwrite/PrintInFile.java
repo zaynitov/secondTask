@@ -1,6 +1,6 @@
-package ru.tsconsulting.SecondTask.readandwrite;
+package ru.tsconsulting.secondtask.readandwrite;
 
-import ru.tsconsulting.SecondTask.lines.LineTwoValues;
+import ru.tsconsulting.secondtask.lines.LineTwoValues;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
