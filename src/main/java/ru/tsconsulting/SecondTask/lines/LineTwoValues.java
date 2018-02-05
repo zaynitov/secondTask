@@ -1,4 +1,4 @@
-package ru.tsconsulting.SecondTask;
+package ru.tsconsulting.SecondTask.lines;
 
 public class LineTwoValues {
     private int id;
@@ -44,8 +44,4 @@ public class LineTwoValues {
         return valueSecond;
     }
 
-    @Override
-    public String toString() {
-        return id+valueFirst+valueSecond;
-    }
 }

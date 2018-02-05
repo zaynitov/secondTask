@@ -1,4 +1,6 @@
-package ru.tsconsulting.SecondTask;
+package ru.tsconsulting.SecondTask.readandwrite;
+
+import ru.tsconsulting.SecondTask.lines.LineOfTable;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -12,9 +14,8 @@ public class ReadingFiles {
         List<LineOfTable> result = new ArrayList<>();
 
         try (BufferedReader reder = new BufferedReader(new InputStreamReader
-                (new FileInputStream(fileName), "windows-1251"))) {
+                (new FileInputStream(fileName), "UTF-8"))) {
             String line = reder.readLine();
-            String[] title = line.split("\\s+");//do smth here
             while ((line = reder.readLine()) != null) {
                 String[] dataForOneLine = line.split("\\s+");
                 if (dataForOneLine.length != 2 || dataForOneLine[0] == null || dataForOneLine[1] == null ||

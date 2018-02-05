@@ -1,30 +1,36 @@
-package ru.tsconsulting.SecondTask;
+package ru.tsconsulting.SecondTask.main;
 
-import java.time.Period;
+import ru.tsconsulting.SecondTask.lines.LineOfTable;
+import ru.tsconsulting.SecondTask.lines.LineTwoValues;
+import ru.tsconsulting.SecondTask.readandwrite.PrintInFile;
+import ru.tsconsulting.SecondTask.readandwrite.ReadingFiles;
+
 import java.util.*;
 
 public class MainClass {
     public static void main(String[] args) {
+        if (args.length != 5) {
+            System.out.println("Input data is incorrect");
+            System.exit(1);
+        }
+
         ReadingFiles readingFile = new ReadingFiles();
         List<LineOfTable> firstFile = readingFile.read(args[0]);
         List<LineOfTable> secFile = readingFile.read(args[1]);
 
-/*        System.out.println(firstFile.toString());
-        System.out.println(secFile.toString());
-        System.out.println(resultArrayList(firstFile, secFile));
-
-        System.out.println(resultLinkedList(firstFile, secFile));
-        System.out.println(resultHashMap(firstFile, secFile));*/
-        PrintFiles printFiles=new PrintFiles();
-        printFiles.printInFile(resultArrayList(firstFile, secFile));
+        PrintInFile printFiles = new PrintInFile();
 
 
-        printFiles.printInFile(resultLinkedList(sortList(firstFile), sortList(secFile)));
-        printFiles.printInFile(resultHashMap(firstFile, secFile));
 
+
+        printFiles.printInFile(resultArrayList(firstFile, secFile),args[2]);
+        printFiles.printInFile(resultLinkedList(sortList(firstFile),
+                sortList(secFile)),args[3]);
+        printFiles.printInFile(resultHashMap(firstFile, secFile),args[4]);
     }
 
-    public static List<LineTwoValues> resultArrayList(List<LineOfTable> firstList, List<LineOfTable> secondList) {
+    public static List<LineTwoValues> resultArrayList(List<LineOfTable> firstList,
+                                                      List<LineOfTable> secondList) {
         List<LineTwoValues> resultArrayList = new ArrayList<>();
         for (LineOfTable lineOfTableFirst : firstList) {
             for (LineOfTable lineOfTableSecond : secondList) {
@@ -40,18 +46,15 @@ public class MainClass {
 
     }
 
+    public static LinkedList<LineTwoValues> resultLinkedList(LinkedList<LineOfTable> firstList,
+                                                             LinkedList<LineOfTable> secondList) {
 
-    public static List<LineTwoValues> resultLinkedList(List<LineOfTable> firstList, List<LineOfTable> secondList) {
-
-        List<LineTwoValues> resultLinkedList = new LinkedList<>();
-        System.out.println(firstList);
-        System.out.println(secondList);
+        LinkedList<LineTwoValues> resultLinkedList = new LinkedList<>();
 
         ListIterator<LineOfTable> firstListIterator = firstList.listIterator();
         ListIterator<LineOfTable> secListIterator = secondList.listIterator();
 
         List<String> listOfValues = new ArrayList<>();
-
 
         LineOfTable firstLine = firstListIterator.next();
         LineOfTable secondLine = secListIterator.next();
@@ -59,7 +62,7 @@ public class MainClass {
         LineOfTable firstLineNext = firstLine;
         LineOfTable secLineNext = secondLine;
 
-        while (firstListIterator.hasNext()&&secListIterator.hasNext()) {
+        while (firstListIterator.hasNext() || secListIterator.hasNext()) {
             if (firstLine.getId() == secondLine.getId()) {
                 //add smth
                 listOfValues.add(secondLine.getValue());
@@ -90,7 +93,6 @@ public class MainClass {
                     if (firstLineNext.getId() == secondLine.getId()) {
                         break;
                     }
-
                 }
             } else if (firstLine.getId() > secondLine.getId()) {
                 firstLineNext = firstLine;
@@ -99,33 +101,32 @@ public class MainClass {
                     if (secLineNext.getId() == firstLine.getId()) {
                         break;
                     }
-
                 }
             }
-
             firstLine = firstLineNext;
             secondLine = secLineNext;
-
-
         }
 
-        if(firstLine.getId()==secondLine.getId())
-        {
-            resultLinkedList.add(new LineTwoValues(firstLine.getId(), firstLine.getValue(),secondLine.getValue()));
+        if ((firstLine.getId() == secondLine.getId()) &&
+                (resultLinkedList.getLast().getId() != firstLine.getId())) {
+            resultLinkedList.add(new LineTwoValues(firstLine.getId(), firstLine.getValue(),
+                    secondLine.getValue()));
         }
-
         return resultLinkedList;
     }
 
-    public static List<LineOfTable>  sortList(List<LineOfTable> listToSort) {
-        Collections.sort(listToSort, new Comparator<LineOfTable>() {
+    public static LinkedList<LineOfTable> sortList(List<LineOfTable> listToSort) {
+        LinkedList<LineOfTable> resultList = new LinkedList();
+
+        resultList.addAll(listToSort);
+
+        Collections.sort(resultList, new Comparator<LineOfTable>() {
             @Override
             public int compare(LineOfTable o1, LineOfTable o2) {
                 return (o1.getId() - o2.getId());
             }
         });
-        return listToSort;
-
+        return resultList;
     }
 
     public static void putValuesRes(List<LineTwoValues> resultLinkedList, String leftValue,
@@ -134,8 +135,6 @@ public class MainClass {
         for (String rightValue : listOfValues) {
             resultLinkedList.add(new LineTwoValues(id, leftValue, rightValue));
         }
-
-
     }
 
     public static Map<Integer, List<LineTwoValues>> resultHashMap(List<LineOfTable> firstList, List<LineOfTable> secondList) {
@@ -167,7 +166,6 @@ public class MainClass {
         }
 
     }
-
 
     public static void putMixValuesToMap(Map<Integer, List<LineTwoValues>> resultMap, List<String> leftList,
                                          List<String> rightList, int id) {

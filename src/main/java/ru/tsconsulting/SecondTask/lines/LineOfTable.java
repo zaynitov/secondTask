@@ -1,6 +1,6 @@
-package ru.tsconsulting.SecondTask;
+package ru.tsconsulting.SecondTask.lines;
 
-public class LineOfTable{
+public class LineOfTable {
     private Integer id;
     private String value;
 
@@ -9,12 +9,6 @@ public class LineOfTable{
         this.id = id;
         this.value = value;
     }
-
-    @Override
-    public String toString() {
-
-return id+value;    }
-
 
     public String getValue() {
         return value;
